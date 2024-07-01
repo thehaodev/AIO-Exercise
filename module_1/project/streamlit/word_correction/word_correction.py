@@ -1,6 +1,9 @@
 import streamlit as st
+from pathlib import Path
 from module_1.project.utils.utils_word import load_vocab
 from module_1.week_2.levenshtein_distance import find_levenshtein_distance
+
+path = Path(__file__).parent.resolve()
 
 
 def run():
