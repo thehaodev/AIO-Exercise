@@ -1,5 +1,5 @@
 import gradio as gr
-from module_1.project.utils.utils_word import load_vocab
+from module_1.project.utils_word import load_vocab
 from module_1.week_2.levenshtein_distance import find_levenshtein_distance
 
 
@@ -10,7 +10,7 @@ def display_dict(dictionary):
 
 
 def process(word):
-    vocabs = load_vocab(file_path="D:/AI_VIETNAM/CODE_EXERCISE/AIO-Exercise/module_1/project/vocab.txt")
+    vocabs = load_vocab(file_path="/module_1/project/vocab.txt")
     leven_disntances = dict()
     for vocab in vocabs:
         leven_disntances[vocab] = find_levenshtein_distance(word, vocab)
