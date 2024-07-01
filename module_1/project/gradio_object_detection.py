@@ -1,7 +1,7 @@
 import numpy as np
 import gradio as gr
 from PIL import Image
-from module_1.project.utils.utils_object_detection import process_image, annotate_image
+from module_1.project.utils_image import process_image, annotate_image
 
 
 def process(input_img):
