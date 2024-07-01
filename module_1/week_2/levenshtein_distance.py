@@ -26,4 +26,4 @@ def find_levenshtein_distance(source: str, target: str):
                 sub_cost = 1
             matrix[r][c] = min(matrix[r][c-1] + 1, matrix[r-1][c] + 1, matrix[r-1][c-1] + sub_cost)
 
-    return print(f"Minimum trans from source to target is {matrix[rows-1][cols-1]}")
+    return matrix[rows-1][cols-1]
