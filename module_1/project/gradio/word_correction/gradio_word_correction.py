@@ -1,5 +1,6 @@
 import gradio as gr
-from module_1.project.utils.utils_word import find_levenshtein_distance, load_vocab
+from module_1.project.utils.utils_word import load_vocab
+from module_1.week_2.levenshtein_distance import find_levenshtein_distance
 
 
 def display_dict(dictionary):
