@@ -45,6 +45,7 @@ https://huggingface.co/spaces/oldHao/WORD_CORRECTION/
 https://huggingface.co/spaces/oldHao/OBJECT_DETECTION
 ### 2. Streamlit
 Here is working live demo for three app: ObjectDetection and WordCorrection
+
 https://aio-exercise-chatbot.streamlit.app/
 
 https://aio-exercise-object-detection.streamlit.app/
