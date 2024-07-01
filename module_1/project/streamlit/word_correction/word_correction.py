@@ -1,10 +1,9 @@
 import streamlit as st
 from pathlib import Path
+path = Path(__file__).parent.resolve()
 from module_1.project.utils.utils_word import load_vocab
 from module_1.week_2.levenshtein_distance import find_levenshtein_distance
-
-path = Path(__file__).parent.resolve()
-
+import modulefinder
 
 def run():
     st.title("Word Correction using Levenshtein Distance")
@@ -27,5 +26,6 @@ def run():
         col2.write("Distances: ")
         col2.write(sorted_distances)
 
+path = Path(__file__).parent.resolve()
 
 run()
