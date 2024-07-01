@@ -3,8 +3,8 @@ import numpy as np
 from PIL import Image
 import streamlit as st
 
-MODEL = "model/MobileNetSSD_deploy.caffemodel"
-PROTOTXT = "model/MobileNetSSD_deploy.prototxt.txt"
+MODEL = "D:/AI_VIETNAM/CODE_EXERCISE/AIO-Exercise/module_1/project/model/MobileNetSSD_deploy.caffemodel"
+PROTOTXT = "D:/AI_VIETNAM/CODE_EXERCISE/AIO-Exercise/module_1/project/model/MobileNetSSD_deploy.prototxt.txt"
 
 
 def process_image(image):
@@ -22,15 +22,14 @@ def annotate_image(image: Image, detections, confidence_threshold=0.5):
         confidence = detections[0, 0, i, 2]
 
         if confidence > confidence_threshold:
-            idx = int(detections[0, 0, i, 1])
-            box = detections[0, 0, idx, 3:7] * np.array([w, h, w, h])
+            box = detections[0, 0, i, 3:7] * np.array([w, h, w, h])
             (start_x, start_y, end_x, end_y) = box.astype("int")
             cv2.rectangle(image, (start_x, start_y), (end_x, end_y), 70, 2)
 
     return image
 
 
-def ui():
+def run():
     st.title("Object Detection for Images")
     file = st.file_uploader("Upload Image", type=['jpg', 'png', 'jpeg'])
     if file is not None:
@@ -41,3 +40,5 @@ def ui():
         prc_image = annotate_image(image, detections)
         st.image(prc_image, caption="Processed Image")
 
+
+run()

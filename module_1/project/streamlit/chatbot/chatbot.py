@@ -26,6 +26,7 @@ def generate_response(prompt_input, email, passwd):
     cookies = sign.login()
     chatbot = hugchat.ChatBot(cookies=cookies.get_dict())
 
+
     return chatbot.chat(prompt_input)
 
 
@@ -40,7 +41,5 @@ if st.session_state.messages[-1]["role"] != "assistant":
         with st.spinner("Thinking..."):
             response = generate_response(prompt, hf_email, hf_pass)
             st.write(response)
-        message = {"role": "assistant", "content": response }
+        message = {"role": "assistant", "content": response}
         st.session_state.messages.append(message)
-
-

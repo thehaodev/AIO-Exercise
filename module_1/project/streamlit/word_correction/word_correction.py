@@ -43,7 +43,7 @@ def load_vocab(file_path):
 def run():
     st.title("Word Correction using Levenshtein Distance")
     word = st.text_input("Word: ")
-    vocabs = load_vocab(".vocab.txt")
+    vocabs = load_vocab(file_path="module_1/project/vocab.txt")
 
     if st.button("Compute"):
         leven_disntances = dict()
@@ -62,4 +62,4 @@ def run():
         col2.write(sorted_distances)
 
 
-
+run()
