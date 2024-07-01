@@ -3,8 +3,8 @@ import cv2
 from PIL import Image
 
 
-MODEL = "D:/AI_VIETNAM/CODE_EXERCISE/AIO-Exercise/module_1/project/model/MobileNetSSD_deploy.caffemodel"
-PROTOTXT = "D:/AI_VIETNAM/CODE_EXERCISE/AIO-Exercise/module_1/project/model/MobileNetSSD_deploy.prototxt.txt"
+MODEL = "module_1/project/model/MobileNetSSD_deploy.caffemodel"
+PROTOTXT = "module_1/project/model/MobileNetSSD_deploy.prototxt.txt"
 
 
 def process_image(image):
