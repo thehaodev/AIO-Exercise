@@ -3,6 +3,7 @@
 - Introduction
 - Installation
 - Usage example
+- Demo
 ## Introduction
 This repository build app using Gradio and Streamlit. Both have three ap with same feature but different UI. 
 
