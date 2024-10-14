@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from module_4 import LinearRegression
 import random
 
 
@@ -32,13 +33,13 @@ def implement_linear_regression(x_data, y_data, epoch_max=50, lr=1e-5):
             y_hat = predict(x1, x2, x3, w1, w2, w3, b)
 
             # compute loss
-            loss = compute_loss_mse(y, y_hat)
+            loss = LinearRegression.compute_loss_mse(y, y_hat)
 
             # compute gradient w1, w2, w3, b
-            dl_dw1 = compute_gradient_wi(x1, y, y_hat)
-            dl_dw2 = compute_gradient_wi(x2, y, y_hat)
-            dl_dw3 = compute_gradient_wi(x3, y, y_hat)
-            dl_db = compute_gradient_b(y, y_hat)
+            dl_dw1 = LinearRegression.compute_gradient_w(x1, y, y_hat)
+            dl_dw2 = LinearRegression.compute_gradient_w(x2, y, y_hat)
+            dl_dw3 = LinearRegression.compute_gradient_w(x3, y, y_hat)
+            dl_db = LinearRegression.compute_gradient_b(y, y_hat)
 
             # update parameters
             w1 = update_weight_wi(w1, dl_dw1, lr)
@@ -78,14 +79,14 @@ def implement_linear_regression_nsamples(x_data, y_data, epoch_max=50, lr=1e-5):
             y_hat = predict(x1, x2, x3, w1, w2, w3, b)
 
             # compute loss
-            loss = compute_loss_mae(y, y_hat)
+            loss = LinearRegression.compute_loss_mae(y, y_hat)
             loss_total = loss_total + loss
 
             # compute gradient w1, w2, w3, b
-            dl_dw1 = compute_gradient_wi(x1, y, y_hat)
-            dl_dw2 = compute_gradient_wi(x2, y, y_hat)
-            dl_dw3 = compute_gradient_wi(x3, y, y_hat)
-            dl_db = compute_gradient_b(y, y_hat)
+            dl_dw1 = LinearRegression.compute_gradient_w(x1, y, y_hat)
+            dl_dw2 = LinearRegression.compute_gradient_w(x2, y, y_hat)
+            dl_dw3 = LinearRegression.compute_gradient_w(x3, y, y_hat)
+            dl_db = LinearRegression.compute_gradient_b(y, y_hat)
 
             # accumulate
             dw1_total = dw1_total + dl_dw1
@@ -132,24 +133,6 @@ def predict(x1, x2, x3, w1, w2, w3, b):
     return result
 
 
-def compute_loss_mse(y_hat, y):
-    return (y_hat - y) ** 2
-
-
-def compute_loss_mae(y_hat, y):
-    return abs(y_hat-y)
-
-
-def compute_gradient_wi(xi, y, y_hat):
-    dl_dwi = 2 * xi * (y_hat - y)
-    return dl_dwi
-
-
-def compute_gradient_b(y, y_hat):
-    dl_db = 2 * (y_hat - y)
-    return dl_db
-
-
 def update_weight_wi(wi, dl_dwi, lr):
     wi = wi - lr * dl_dwi
     return wi
@@ -169,7 +152,7 @@ def initialize_params():
 
 def run_simple():
     # Question 1 -> A
-    x, y = prepare_data('advertising.csv')
+    x, y = prepare_data('../data/advertising.csv')
     list_data = [sum(x[0][:5]), sum(x[1][:5]), sum(x[2][:5]), sum(y[:5])]
     print(list_data)
 
@@ -178,15 +161,15 @@ def run_simple():
     print(y_p)
 
     # Question 3 -> A
-    loss = compute_loss_mse(y_hat=1, y=0.5)
+    loss = LinearRegression.compute_loss_mse(y_hat=1, y=0.5)
     print(loss)
 
     # Question 4 -> A
-    g_wi = compute_gradient_wi(xi=1.0, y=1.0, y_hat=0.5)
+    g_wi = LinearRegression.compute_gradient_w(xi=1.0, y=1.0, y_hat=0.5)
     print(g_wi)
 
     # Question 5 -> B
-    g_b = compute_gradient_b(y=2.0, y_hat=0.5)
+    g_b = LinearRegression.compute_gradient_b(y=2.0, y_hat=0.5)
     print(g_b)
 
     # Question 6 -> A
@@ -201,7 +184,6 @@ def run_simple():
     plt.plot(losses[:100])
     plt.xlabel("#iteration")
     plt.ylabel("Loss")
-    plt.show()
 
     # Question 8->A
     print(w1, w2, w3)
@@ -214,12 +196,14 @@ def run_simple():
     print(f'predicted sales is {sales}')
 
     # Question 10 -> A
-    loss = compute_loss_mae(y_hat=1, y=0.5)
+    loss = LinearRegression.compute_loss_mae(y_hat=1, y=0.5)
     print(loss)
 
     # Question 11 -> D
     w1, w2, w3, _, _ = implement_linear_regression_nsamples(x, y, 1000)
     print(w1, w2, w3)
+
+    plt.show()
 
 
 run_simple()
