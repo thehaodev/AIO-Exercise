@@ -86,7 +86,7 @@ def implement_linear_regression(x_feature, y_ouput, epoch_max=50, lr=1e-5):
 
 def run():
     # Question 12 -> A
-    x, y = prepare_data('advertising.csv')
+    x, y = prepare_data('../data/advertising.csv')
     _, loss = implement_linear_regression(x, y)
     print(loss[9999])
 
