@@ -50,7 +50,7 @@ def crossover(individual1, individual2, crossover_rate=0.9):
 def selection(sorted_old_population, m=100):
     index1 = random.SystemRandom().randint(0, m - 1)
     while True:
-        index2 = random.randint(0, m - 1)
+        index2 = random.SystemRandom().randint(0, m - 1)
         if index2 != index1:
             break
     individual_s = sorted_old_population[index1]
