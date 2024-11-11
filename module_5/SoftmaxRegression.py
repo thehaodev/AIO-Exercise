@@ -35,34 +35,19 @@ class SoftmaxRegression:
         gradient = self.compute_gradient(x_data, y_data)
         self.theta = self.theta - self.learning_rate * gradient
 
-    def training(self, x_data, y_data):
-        # compute loss
-        loss = self.compute_loss(x_data, y_data)
-
-        # compute and update gradient
-        self.update_gradient(x_data, y_data)
-
-        # Compute losses
-        self.losses.append(loss)
-
-        print(loss)
-
-    def mini_batch_training(self):
-        mini_batch_loss = []
-        for _ in range(self.num_epochs):
-            for i in range(0, self.x_data.shape[0], self.batch_size):
-                x_i = self.x_data[i:i + self.batch_size]
-                y_i = self.y_target[i:i + self.batch_size]
-                self.training(x_i, y_i)
-            train_batch_losses = sum(self.losses) / len(self.losses)
-            mini_batch_loss.append(train_batch_losses)
-
-        self.losses = mini_batch_loss
-
-    def batch_training(self):
+    def batch_training(self, x_data, y_data):
         batch_loss = []
         for _ in range(self.num_epochs):
-            self.training(self.x_data, self.y_target)
+            # compute loss
+            loss = self.compute_loss(x_data, y_data)
+
+            # compute and update gradient
+            self.update_gradient(x_data, y_data)
+
+            # Compute losses
+            self.losses.append(loss)
+
+            print(loss)
             batch_losses = sum(self.losses) / len(self.losses)
             batch_loss.append(batch_losses)
 
