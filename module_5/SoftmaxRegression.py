@@ -1,5 +1,4 @@
 import numpy as np
-import matplotlib.pyplot as plt
 
 
 class SoftmaxRegression:
@@ -46,17 +45,7 @@ class SoftmaxRegression:
         # Compute losses
         self.losses.append(loss)
 
-        # Compute accuracy
-        self.accuracy.append(self.compute_accuracy(x_data, y_data))
         print(loss)
-
-    def stochastic_training(self):
-        for _ in range(self.num_epochs):
-            for i in range(0, self.num_samples, self.batch_size):
-                x_i = self.x_data[i]
-                y_i = self.y_target[i]
-
-                self.training(x_i, y_i)
 
     def mini_batch_training(self):
         mini_batch_loss = []
@@ -78,22 +67,3 @@ class SoftmaxRegression:
             batch_loss.append(batch_losses)
 
         self.losses = batch_loss
-
-    def compute_accuracy(self, x_data, y_data):
-        y_hat = self.predict(x_data).round()
-        self.accuracy.append((y_hat == y_data).mean())
-
-    def accuracy_model(self):
-        return len(self.accuracy) / self.y_target.size
-
-    def plot_loss_accuracy(self):
-        _, ax = plt.subplots(2, 1, figsize=(12, 10))
-        ax[0].plot(self.losses)
-        ax[0].set(xlabel='Epoch', ylabel='Loss')
-        ax[0].set_title('Loss')
-
-        ax[1].plot(self.accuracy)
-        ax[1].set(xlabel='Epoch', ylabel='Accuracy')
-        ax[1].set_title('Accuracy')
-
-        plt.show()
