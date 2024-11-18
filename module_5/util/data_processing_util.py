@@ -2,10 +2,10 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 
 
-def sklearn_split_data(val_size, test_size, random_state, x_data, y):
+def sklearn_split_data(val_size, test_size, random_state, x_features, y_label):
     is_shuffle = True
     x_train, x_val, y_train, y_val = train_test_split(
-        x_data, y,
+        x_features, y_label,
         test_size=val_size,
         random_state=random_state,
         shuffle=is_shuffle)
