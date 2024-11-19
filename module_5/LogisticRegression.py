@@ -1,8 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from RegressionInterface import RegressionInterface
 
 
-class LogisticRegression:
+class LogisticRegression(RegressionInterface):
     def __init__(self, x_data, y_target, theta, batch_size, learning_rate=0.01, num_epochs=10000):
         self.num_samples = x_data.shape[0]
         self.x_data = x_data

@@ -1,7 +1,8 @@
 import numpy as np
+from RegressionInterface import RegressionInterface
 
 
-class SoftmaxRegression:
+class SoftmaxRegression(RegressionInterface):
     def __init__(self, x_data, y_target, theta, batch_size, learning_rate, num_epochs):
         self.num_samples = x_data.shape[0]
         self.x_data = x_data
