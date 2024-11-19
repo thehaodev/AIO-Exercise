@@ -9,7 +9,7 @@ import pipline_util
 
 class MLP(nn.Module):
     def __init__(self, input_dims, hidden_dims, output_dims):
-        super(MLP).__init__()
+        super(MLP, self).__init__()
         self.linear1 = nn.Linear(input_dims, hidden_dims)
         self.linear2 = nn.Linear(hidden_dims, hidden_dims)
         self.output = nn.Linear(hidden_dims, output_dims)

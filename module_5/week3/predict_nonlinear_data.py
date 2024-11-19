@@ -1,7 +1,7 @@
 import numpy as np
 import torch
 import torch.nn as nn
-from torch.utils.data import Dataset, DataLoader
+from torch.utils.data import DataLoader
 import pipline_util
 import matplotlib.pyplot as plt
 
@@ -18,13 +18,6 @@ class MLP(nn.Module):
         x = self.relu(x)
         out = self.output(x)
         return out.squeeze(1)
-
-
-def compute_accuracy(y_hat, y_true):
-    _, y_hat = torch.max(y_hat, dim=1)
-    correct = (y_hat == y_true).sum().item()
-    accuracy = correct / len(y_true)
-    return accuracy
 
 
 def run():
@@ -65,60 +58,8 @@ def run():
     optimizer = torch.optim.SGD(model.parameters(), weight_decay=0, lr=lr, momentum=0)
 
     epochs = 100
-    train_losses = []
-    val_losses = []
-    train_accs = []
-    val_accs = []
-
-    for epoch in range(epochs):
-        train_loss = 0.0
-        train_target = []
-        train_predict = []
-        model.train()
-        for x_samples, y_samples in train_loader:
-            x_samples = x_samples.to(device)
-            y_samples = y_samples.to(device)
-            optimizer.zero_grad()
-            outputs = model(x_samples)
-            loss = criterion(outputs, y_samples)
-            loss.backward()
-            optimizer.step()
-            train_loss += loss.item()
-
-            train_predict.append(outputs.detach().cpu())
-            train_target.append(y_samples.cpu())
-
-        train_loss /= len(train_loader)
-        train_losses.append(train_loss)
-
-        train_predict = torch.cat(train_predict)
-        train_target = torch.cat(train_target)
-        train_acc = compute_accuracy(train_predict, train_target)
-        train_accs.append(train_acc)
-
-        val_loss = 0.0
-        val_target = []
-        val_predict = []
-        model.eval()
-        with torch.no_grad():
-            for x_samples, y_samples in val_loader:
-                x_samples = x_samples.to(device)
-                y_samples = y_samples.to(device)
-                outputs = model(x_samples)
-                val_loss += criterion(outputs, y_samples).item()
-
-                val_predict.append(outputs.cpu())
-                val_target.append(y_samples.cpu())
-
-        val_loss /= len(val_loader)
-        val_losses.append(val_loss)
-
-        val_predict = torch.cat(val_predict)
-        val_target = torch.cat(val_target)
-        val_acc = compute_accuracy(val_predict, val_target)
-        val_accs.append(val_acc)
-
-        print(f'\nEPOCH {epoch + 1}:\tTraining loss: {train_loss:.3f}\tValidation loss: {val_loss:.3f}')
+    train_losses, val_losses, train_accs, val_accs = pipline_util.training(epochs, model, device, optimizer,
+                                                                           criterion, train_loader, val_loader)
     _, ax = plt.subplots(2, 2, figsize=(12, 10))
 
     # Plotting training and validation loss
@@ -136,26 +77,10 @@ def run():
     plt.tight_layout()
     plt.show()
 
-    # Evaluation on the test set
-    test_target = []
-    test_predict = []
-    model.eval()
-
-    with torch.no_grad():
-        for x_samples, y_samples in test_loader:
-            x_samples = x_samples.to(device)
-            y_samples = y_samples.to(device)
-            outputs = model(x_samples)
-
-            test_predict.append(outputs.cpu())
-            test_target.append(y_samples.cpu())
-
-            # Concatenating the test predictions and targets
-    test_predict = torch.cat(test_predict)
-    test_target = torch.cat(test_target)
+    test_predict, test_target = pipline_util.compute_evaluate(model, test_loader, device)
 
     # Compute test accuracy
-    test_acc = compute_accuracy(test_predict, test_target)
+    test_acc = pipline_util.compute_accuracy(test_predict, test_target)
     print('Evaluation on test set:')
     print(f'Accuracy: {test_acc}')
 
