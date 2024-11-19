@@ -1,7 +1,5 @@
-import cv2
 import os
 import numpy as np
-import pandas as pd
 import matplotlib.pyplot as plt
 import torch
 import torch.nn as nn
@@ -11,7 +9,6 @@ from torchvision.transforms import Resize
 from torchvision.io import read_image
 
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
 import pipline_util
 
 
@@ -153,21 +150,8 @@ def run():
     train_losses, val_losses, train_accs, val_accs = pipline_util.training(epochs, model, device, optimizer,
 
                                                                            criterion, train_loader, val_loader)
-    _, ax = plt.subplots(2, 2, figsize=(12, 10))
-    ax[0, 0].plot(train_losses, color='green')
-    ax[0, 0].set(xlabel='Epoch', ylabel='Loss', title='Training Loss')
-    ax[0, 1].plot(val_losses, color='orange')
-    ax[0, 1].set(xlabel='Epoch', ylabel='Loss', title='Validation Loss')
 
-    # Plotting training and validation accuracy
-    ax[1, 0].plot(train_accs, color='green')
-    ax[1, 0].set(xlabel='Epoch', ylabel='Accuracy', title='Training Accuracy')
-    ax[1, 1].plot(val_accs, color='orange')
-    ax[1, 1].set(xlabel='Epoch', ylabel='Accuracy', title='Validation Accuracy')
-
-    # Display the plots
-    plt.tight_layout()  # Adjusts subplot params for better layout
-    plt.show()
+    pipline_util.plot_loss_accuracy(train_losses, val_losses, train_accs, val_accs)
 
     val_predict, val_target = pipline_util.compute_evaluate(model, val_loader, device)
 

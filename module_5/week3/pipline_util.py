@@ -1,10 +1,8 @@
 import numpy as np
-import pandas as pd
 import torch
-import torch.nn as nn
-import torch.nn.functional as F
-from torch.utils.data import Dataset, DataLoader
+from torch.utils.data import Dataset
 from module_5.util import data_processing_util
+import matplotlib.pyplot as plt
 
 
 def set_random_value():
@@ -126,6 +124,19 @@ def compute_evaluate(model, loader, device):
 
     return predict, target
 
+
+def plot_loss_accuracy(train_losses, val_losses, train_accs, val_accs):
+    _, ax = plt.subplots(2, 2, figsize=(12, 10))
+    ax[0, 0].plot(train_losses, color='green')
+    ax[0, 0].set(xlabel='Epoch', ylabel='Loss', title='Training Loss')
+    ax[0, 1].plot(val_losses, color='orange')
+    ax[0, 1].set(xlabel='Epoch', ylabel='Loss', title='Validation Loss')
+
+    # Plotting training and validation accuracy
+    ax[1, 0].plot(train_accs, color='green')
+    ax[1, 0].set(xlabel='Epoch', ylabel='Accuracy', title='Training Accuracy')
+    ax[1, 1].plot(val_accs, color='orange')
+    ax[1, 1].set(xlabel='Epoch', ylabel='Accuracy', title='Validation Accuracy')
 
 
 class CustomDataset(Dataset):

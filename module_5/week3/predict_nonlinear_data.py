@@ -60,19 +60,7 @@ def run():
     epochs = 100
     train_losses, val_losses, train_accs, val_accs = pipline_util.training(epochs, model, device, optimizer,
                                                                            criterion, train_loader, val_loader)
-    _, ax = plt.subplots(2, 2, figsize=(12, 10))
-
-    # Plotting training and validation loss
-    ax[0, 0].plot(train_losses, color='green')
-    ax[0, 0].set(xlabel='Epoch', ylabel='Loss', title='Training Loss')
-    ax[0, 1].plot(val_losses, color='orange')
-    ax[0, 1].set(xlabel='Epoch', ylabel='Loss', title='Validation Loss')
-
-    # Plotting training and validation accuracy
-    ax[1, 0].plot(train_accs, color='green')
-    ax[1, 0].set(xlabel='Epoch', ylabel='Accuracy', title='Training Accuracy')
-    ax[1, 1].plot(val_accs, color='orange')
-    ax[1, 1].set(xlabel='Epoch', ylabel='Accuracy', title='Validation Accuracy')
+    pipline_util.plot_loss_accuracy(train_losses, val_losses, train_accs, val_accs)
 
     plt.tight_layout()
     plt.show()
