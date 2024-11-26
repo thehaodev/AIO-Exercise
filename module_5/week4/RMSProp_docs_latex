@@ -1,0 +1,92 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+
+\begin{document}
+
+\title{Giảm Thiểu Hàm với Thuật Toán RMSProp}
+\author{}
+\date{}
+\maketitle
+
+\section*{1. Giới thiệu}
+Xét hàm mục tiêu:
+\[
+f(w_1, w_2) = 0.1w_1^2 + 2w_2^2
+\]
+
+\textbf{Điều kiện ban đầu:}
+\begin{itemize}
+    \item \( w_1 = -5 \)
+    \item \( w_2 = -2 \)
+    \item \( s_1 = 0 \)
+    \item \( s_2 = 0 \)
+    \item \( \alpha = 0.3 \)
+    \item \( \gamma = 0.9 \)
+    \item \( \epsilon = 10^{-6} \)
+\end{itemize}
+
+\section*{2. Các bước chi tiết cho Epoch = 2}
+
+\subsection*{Epoch 1}
+\textbf{Bước 1: Tính các đạo hàm riêng:}
+\[
+\frac{\partial f}{\partial w_1} = 0.2 w_1 = 0.2 \cdot (-5) = -1
+\]
+\[
+\frac{\partial f}{\partial w_2} = 4 w_2 = 4 \cdot (-2) = -8
+\]
+
+\textbf{Bước 2: Tính \( s_1 \) và \( s_2 \):}
+\[
+s_1 = \gamma s_1 + (1 - \gamma) \left(\frac{\partial f}{\partial w_1}\right)^2 = 0.9 \cdot 0 + 0.1 \cdot (-1)^2 = 0.1
+\]
+\[
+s_2 = \gamma s_2 + (1 - \gamma) \left(\frac{\partial f}{\partial w_2}\right)^2 = 0.9 \cdot 0 + 0.1 \cdot (-8)^2 = 6.4
+\]
+
+\textbf{Bước 3: Cập nhật \( w_1 \) và \( w_2 \):}
+\[
+w_1 = w_1 - \alpha \cdot \frac{\frac{\partial f}{\partial w_1}}{\sqrt{s_1} + \epsilon} = -5 - 0.3 \cdot \frac{-1}{\sqrt{0.1} + 10^{-6}} \approx -5 + 0.3 \cdot 3.1623 \approx -4.058
+\]
+\[
+w_2 = w_2 - \alpha \cdot \frac{\frac{\partial f}{\partial w_2}}{\sqrt{s_2} + \epsilon} = -2 - 0.3 \cdot \frac{-8}{\sqrt{6.4} + 10^{-6}} \approx -2 + 0.3 \cdot 3.1623 \approx -1.05
+\]
+
+\textbf{Giá trị sau Epoch 1:}
+\[
+w_1 = -4.058, \quad w_2 = -1.05
+\]
+
+\subsection*{Epoch 2}
+\textbf{Bước 1: Tính các đạo hàm riêng lại:}
+\[
+\frac{\partial f}{\partial w_1} = 0.2 \cdot (-4.058) \approx -0.8116
+\]
+\[
+\frac{\partial f}{\partial w_2} = 4 \cdot (-1.05) \approx -4.2
+\]
+
+\textbf{Bước 2: Tính \( s_1 \) và \( s_2 \):}
+\[
+s_1 = \gamma s_1 + (1 - \gamma) \left(\frac{\partial f}{\partial w_1}\right)^2 \approx 0.9 \cdot 0.1 + 0.1 \cdot (-0.8116)^2 \approx 0.090 + 0.0066 \approx 0.096
+\]
+\[
+s_2 = \gamma s_2 + (1 - \gamma) \left(\frac{\partial f}{\partial w_2}\right)^2 \approx 0.9 \cdot 6.4 + 0.1 \cdot (-4.2)^2 \approx 5.76 + 0.1764 \approx 5.94
+\]
+
+\textbf{Bước 3: Cập nhật \( w_1 \) và \( w_2 \):}
+\[
+w_1 = w_1 - \alpha \cdot \frac{\frac{\partial f}{\partial w_1}}{\sqrt{s_1} + \epsilon} = -4.058 - 0.3 \cdot \frac{-0.8116}{\sqrt{0.096} + 10^{-6}} \approx -4.058 + 0.3 \cdot 8.215 \approx -3.356
+\]
+\[
+w_2 = w_2 - \alpha \cdot \frac{\frac{\partial f}{\partial w_2}}{\sqrt{s_2} + \epsilon} = -1.05 - 0.3 \cdot \frac{-4.2}{\sqrt{5.94} + 10^{-6}} \approx -1.05 + 0.3 \cdot 1.744 \approx -0.579
+\]
+
+\textbf{Giá trị sau Epoch 2:}
+\[
+w_1 \approx -3.356, \quad w_2 \approx -0.579
+\]
+
+\end{document}
