@@ -1,0 +1,59 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+
+\begin{document}
+
+\section*{Bài 1: Gradient Descent}
+
+\subsection*{1. Các bước thực hiện Gradient Descent với 2 Epochs}
+
+\textbf{Bước 1: Tính đạo hàm:}
+\begin{align*}
+f(w_1, w_2) &= 0.1 w_1^2 + 2 w_2^2 \\
+\frac{\partial f}{\partial w_1} &= 0.2 w_1 \\
+\frac{\partial f}{\partial w_2} &= 4 w_2
+\end{align*}
+
+\textbf{Bước 2: Cập nhật \(w_1\) và \(w_2\)}
+
+Giá trị khởi tạo:
+\begin{align*}
+w_1 &= -5, \\
+w_2 &= -2, \\
+\alpha &= 0.4
+\end{align*}
+
+\textbf{Epoch 1:}
+\begin{align*}
+dW &= \begin{bmatrix}
+0.2 \cdot (-5) \\
+4 \cdot (-2)
+\end{bmatrix} = \begin{bmatrix}
+-1 \\
+-8
+\end{bmatrix} \\
+w_1' &= w_1 - \alpha \cdot \frac{\partial f}{\partial w_1} = -5 - 0.4 \cdot (-1) = -4.6 \\
+w_2' &= w_2 - \alpha \cdot \frac{\partial f}{\partial w_2} = -2 - 0.4 \cdot (-8) = 1.2
+\end{align*}
+
+\textbf{Epoch 2:}
+\begin{align*}
+dW &= \begin{bmatrix}
+0.2 \cdot (-4.6) \\
+4 \cdot (1.2)
+\end{bmatrix} = \begin{bmatrix}
+-0.92 \\
+4.8
+\end{bmatrix} \\
+w_1'' &= w_1' - \alpha \cdot \frac{\partial f}{\partial w_1} = -4.6 - 0.4 \cdot (-0.92) = -4.232 \\
+w_2'' &= w_2' - \alpha \cdot \frac{\partial f}{\partial w_2} = 1.2 - 0.4 \cdot (4.8) = -0.72
+\end{align*}
+
+Sau 2 epochs, ta có:
+\begin{align*}
+w_1 &\approx -4.232 \\
+w_2 &\approx -0.72
+\end{align*}
+
+\end{document}
