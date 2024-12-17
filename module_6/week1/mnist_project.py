@@ -10,7 +10,7 @@ import torchvision.datasets as datasets
 from torch.utils.data import DataLoader
 from torchvision import transforms
 
-import util
+from module_6 import util
 
 
 class LeNetClassifier(nn.Module):
