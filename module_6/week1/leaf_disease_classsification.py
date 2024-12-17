@@ -7,7 +7,7 @@ import torchvision.datasets as datasets
 import torchvision.transforms as transforms
 from PIL import Image
 
-import util
+from module_6 import util
 
 
 def loader(path):
