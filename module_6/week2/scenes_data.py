@@ -188,13 +188,13 @@ def run():
         epochs
     )
 
-    val_loss, val_acc = file_util.evaluate(
+    val_loss, val_acc = util.evaluate(
         model,
         val_loader,
         criterion,
         device
     )
-    test_loss, test_acc = file_util.evaluate(
+    test_loss, test_acc = util.evaluate(
         model,
         test_loader,
         criterion,
