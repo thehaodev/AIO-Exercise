@@ -94,27 +94,6 @@ class SentimentClassifier(nn.Module):
         return x
 
 
-def evaluate(model, dataloader, criterion, device):
-    model.eval()
-    correct = 0
-    total = 0
-    losses = []
-    with torch.no_grad():
-        for inputs, labels in dataloader:
-            inputs, labels = inputs.to(device), labels.to(device)
-            outputs = model(inputs)
-            loss = criterion(outputs, labels)
-            losses.append(loss.item())
-            _, predicted = torch.max(outputs.data, 1)
-            total += labels.size(0)
-            correct += (predicted == labels).sum().item()
-
-    loss = sum(losses) / len(losses)
-    acc = correct / total
-
-    return loss, acc
-
-
 def transform(text, word_to_idx, max_seq_len):
     tokens = []
     for w in text.split():
@@ -218,7 +197,7 @@ def run():
         shuffle=False,
         num_workers=0
     )
-    test_loader = DataLoader(
+    _ = DataLoader(
         test_dataset,
         batch_size=test_batch_size,
         shuffle=False,
@@ -251,7 +230,7 @@ def run():
         weight_decay=0
     )
 
-    train_losses, val_losses = util.fit(
+    _, _ = util.fit(
         model,
         train_loader,
         val_loader,
@@ -260,34 +239,6 @@ def run():
         device,
         epochs
     )
-
-    _, val_acc = evaluate(
-        model,
-        val_loader,
-        criterion,
-        device
-    )
-    _, test_acc = evaluate(
-        model,
-        test_loader,
-        criterion,
-        device
-    )
-
-    _, ax = plt.subplots(1, 2, figsize=(12, 5))
-    ax[0].plot(train_losses)
-    ax[0].set_title('Training Loss')
-    ax[0].set_xlabel('Epoch')
-    ax[0].set_ylabel('Loss')
-    ax[1].plot(val_losses, color='orange')
-    ax[1].set_title('Val Loss')
-    ax[1].set_xlabel('Epoch')
-    ax[1].set_ylabel('Loss')
-    plt.show()
-
-    print('Evaluation on val/test dataset')
-    print('Val accuracy: ', val_acc)
-    print('Test accuracy: ', test_acc)
 
 
 run()
